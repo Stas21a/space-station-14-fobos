@@ -27,12 +27,19 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
     /// <remarks>
     /// This is expensive so not recommended to run if you have a slider.
     /// </remarks>
-    public void LoadPreview(HumanoidCharacterProfile profile, JobPrototype? jobOverride = null, bool showClothes = true)
+    public void LoadPreview(ICharacterProfile profile, JobPrototype? jobOverride = null, bool showClothes = true)
     {
         EntMan.DeleteEntity(PreviewDummy);
         PreviewDummy = EntityUid.Invalid;
 
-        LoadHumanoidEntity(profile, jobOverride, showClothes);
+        switch (profile)
+        {
+            case HumanoidCharacterProfile humanoid:
+                LoadHumanoidEntity(humanoid, jobOverride, showClothes);
+                break;
+            default:
+                throw new ArgumentException("Only humanoid profiles are implemented in ProfilePreviewSpriteView");
+        }
 
         SetEntity(PreviewDummy);
         SetName(profile.Name);
@@ -49,9 +56,16 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
     /// <summary>
     /// A slim reload that only updates the entity itself and not any of the job entities, etc.
     /// </summary>
-    public void ReloadProfilePreview(HumanoidCharacterProfile profile)
+    public void ReloadProfilePreview(ICharacterProfile profile)
     {
-        ReloadHumanoidEntity(profile);
+        switch (profile)
+        {
+            case HumanoidCharacterProfile humanoid:
+                ReloadHumanoidEntity(humanoid);
+                break;
+            default:
+                throw new ArgumentException("Only humanoid profiles are implemented in ProfilePreviewSpriteView");
+        }
     }
 
     public void ClearPreview()
