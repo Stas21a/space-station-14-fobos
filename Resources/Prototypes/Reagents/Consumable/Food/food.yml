@@ -8,7 +8,7 @@
   flavor: nutriment
   color: "#24591F"
   metabolisms:
-    Metabolites:
+    Food:
       effects:
       - !type:SatiateHunger
   plantMetabolism:
@@ -27,7 +27,7 @@
   flavor: vitamin
   color: "#D3D3D3"
   metabolisms:
-    Metabolites: #This makes it not compete with medicines, a large bonus for something that can heal
+    Food: #This makes it not compete with medicines, a large bonus for something that can heal
       effects:
       - !type:EvenHealthChange
         probability: 0.5
@@ -55,7 +55,7 @@
   flavor: protein
   color: "#FFFFE5"
   metabolisms:
-    Metabolites:
+    Food:
       effects:
       - !type:EvenHealthChange
         probability: 0.5
@@ -76,7 +76,7 @@
   color: white
   meltingPoint: 146.0
   metabolisms:
-    Metabolites:
+    Food:
       effects:
       - !type:SatiateHunger
         conditions:
