@@ -152,7 +152,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
             damageable.DamagePerGroup.OrderByDescending(damage => damage.Value)
                 .ToDictionary(x => x.Key, x => x.Value);
 
-        IReadOnlyDictionary<string, FixedPoint2> damagePerType = damageable.Damage.DamageDict;
+        var damagePerType = damageable.Damage.DamageDict;
 
         DrawDiagnosticGroups(damageSortedGroups, damagePerType);
     }
@@ -200,7 +200,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
 
             foreach (var type in group.DamageTypes)
             {
-                if (!damageDict.TryGetValue(type, out var typeAmount) || typeAmount <= 0)
+                if (!damageDict.TryGetValue(type.Id, out var typeAmount) || typeAmount <= 0)
                     continue;
 
                 var damageString = Loc.GetString(

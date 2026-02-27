@@ -12,6 +12,8 @@
   - DetailExaminable
   - Dna
   - Fingerprint
+  - Grammar # Pronouns
+  - HumanoidProfile # Age, Sex, Gender
   - NpcFactionMember
   # traits
   - BlackAndWhiteOverlay
@@ -54,6 +56,8 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
+  eventComponents:
+  - Vocal # voice sounds
 
 # for job-specific traits etc.
 - type: cloningSettings
@@ -120,7 +124,6 @@
   # these need special treatment in the event subscription
   - Inventory # arachnid pockets and diona feet
   - Wagging # lizard tails
-  - Vocal # voice sounds
   - Storage # slime storage
   - Rootable # diona
   - Sericulture # arachnids

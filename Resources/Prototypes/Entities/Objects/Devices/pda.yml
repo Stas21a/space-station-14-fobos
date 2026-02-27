@@ -305,8 +305,6 @@
     borderColor: "#817d6f" # DS14
   - type: Icon
     state: pda-cook
-  - type: ReplacementAccent # for random sentience event
-    accent: italian
 
 - type: entity
   parent: BasePDA
