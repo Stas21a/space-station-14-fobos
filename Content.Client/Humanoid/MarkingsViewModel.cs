@@ -287,8 +287,7 @@ public sealed class MarkingsViewModel
         if (!markingSet.TryGetValue(layer, out var markings))
             return;
 
-        var markingIdx = markings.FindIndex(it => it.MarkingId == markingId);
-        if (markingIdx == -1)
+        if (markings.FindIndex(it => it.MarkingId == markingId) is var markingIdx && markingIdx >= 0)
             return;
 
         markings[markingIdx] = markings[markingIdx].WithColorAt(colorIndex, color);
