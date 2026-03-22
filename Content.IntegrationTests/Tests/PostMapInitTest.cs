@@ -155,6 +155,7 @@ namespace Content.IntegrationTests.Tests
         {
             "Boxer",
             "Zookeeper",
+            "Lawyer",
         };
         // DS14-end
 
