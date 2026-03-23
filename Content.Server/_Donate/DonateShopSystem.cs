@@ -42,10 +42,6 @@ public sealed class DonateShopSystem : EntitySystem
     private IDonateApiService? _donateApiService;
     private TimeSpan _lastRetryTime = TimeSpan.Zero;
 
-    private EnergyShopState? _energyShopCache;
-    private TimeSpan _energyShopCacheTime = TimeSpan.Zero;
-    private static readonly TimeSpan EnergyShopCacheDuration = TimeSpan.FromMinutes(5);
-
     private record struct PendingUptimeSession(string UserId, DateTime Entry, DateTime Exit);
 
     private string GetApiUserId(string visitorId) => Testing ? TestUserId : visitorId;
@@ -215,7 +211,6 @@ public sealed class DonateShopSystem : EntitySystem
         if (result.Success)
         {
             InvalidatePlayerCache(visitorId);
-            InvalidateShopCache();
             await SendUpdatedPlayerStateAsync(session);
             await SendUpdatedInventoryAsync(session);
         }
@@ -432,11 +427,6 @@ public sealed class DonateShopSystem : EntitySystem
     {
         _playerCache.TryRemove(visitorId, out _);
         _inventoryCache.TryRemove(visitorId, out _);
-    }
-
-    private void InvalidateShopCache()
-    {
-        _energyShopCache = null;
     }
 
     private async Task SendUptimeAsync(string visitorId, DateTime entryTime, DateTime exitTime)
