@@ -303,6 +303,9 @@ namespace Content.Server.Database.Migrations.Postgres
                 WHERE
                 	hwid IS NOT NULL;
 
+                -- DS14: Clean orphaned unban records before import
+                DELETE FROM server_unban WHERE ban_id NOT IN (SELECT server_ban_id FROM server_ban);
+
                 -- Insert ban unban records.
                 INSERT INTO
                 	unban (ban_id, unbanning_admin, unban_time)
@@ -457,6 +460,9 @@ namespace Content.Server.Database.Migrations.Postgres
                 ON srb.server_role_ban_id = mm.server_role_ban_id
                 -- Yes, we have some messy ban records which, after merging, end up with duplicate roles.
                 ON CONFLICT DO NOTHING;
+
+                -- DS14: Clean orphaned role unban records before import
+                DELETE FROM server_role_unban WHERE ban_id NOT IN (SELECT server_role_ban_id FROM server_role_ban);
 
                 -- Insert role unban records.
                 INSERT INTO
