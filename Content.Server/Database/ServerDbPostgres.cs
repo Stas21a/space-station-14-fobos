@@ -44,6 +44,7 @@ namespace Content.Server.Database
                 await using var ctx = new PostgresServerDbContext(_options);
                 try
                 {
+                    ctx.Database.SetCommandTimeout(TimeSpan.FromMinutes(5));
                     await ctx.Database.MigrateAsync();
                 }
                 finally
