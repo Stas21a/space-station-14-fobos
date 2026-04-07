@@ -1,12 +1,14 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
+using Content.Server.DeadSpace.Abilities.Cocoon.Components;
 using Content.Server.DeadSpace.Demons.DemonShadow.Components;
+using Content.Shared.Body.Events;
+using Content.Shared.Destructible;
+using Content.Shared.Eye;
+using Content.Shared.Ghost;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
-using Content.Shared.Destructible;
-using Content.Server.DeadSpace.Abilities.Cocoon.Components;
-using Content.Shared.Body.Events;
 
 namespace Content.Server.DeadSpace.Demons.LockCocoon;
 
@@ -53,6 +55,9 @@ public sealed class ShadowCocoonSystem : EntitySystem
 
         foreach (var (entity, pointLightComp) in entities)
         {
+            if (CheckParentVisibilityLayer(entity))
+                continue;
+
             lights.Add(entity);
             _pointLightSystem.SetEnabled(entity, false);
             component.PointEntities.Add(entity);
@@ -70,6 +75,27 @@ public sealed class ShadowCocoonSystem : EntitySystem
         }
 
         component.NextTick = _gameTiming.CurTime + TimeSpan.FromSeconds(1);
+    }
+
+    /// <summary>  
+    /// Проверяет, отличается ли слой видимости родителя от Normal  
+    /// </summary>  
+    public bool CheckParentVisibilityLayer(EntityUid uid)
+    {
+        if (!_containerSystem.TryGetContainingContainer((uid, null, null), out var container))
+            return false;
+
+        var parentUid = container.Owner;
+
+        if (TryComp<VisibilityComponent>(parentUid, out var visibilityComponent))
+        {
+            return visibilityComponent.Layer != (int)VisibilityFlags.Normal;
+        }
+
+        if (HasComp<GhostComponent>(parentUid))
+            return true;
+
+        return false;
     }
 
     private void OnInit(EntityUid uid, ShadowCocoonComponent component, ComponentInit args)
