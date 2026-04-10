@@ -36,6 +36,8 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Server.PDA;
+using Content.Shared.PDA;
 
 namespace Content.Server.DeadSpace.Demons.DemonShadow;
 
@@ -401,6 +403,9 @@ public sealed class DemonShadowSystem : SharedDemonShadowSystem
                 continue;
 
             if (HasComp<GhostComponent>(ent))
+                continue;
+
+            if (HasComp<PdaComponent>(ent))
                 continue;
 
             if (TryComp<VisibilityComponent>(ent, out var layer) && layer.Layer != (int)VisibilityFlags.Normal)
