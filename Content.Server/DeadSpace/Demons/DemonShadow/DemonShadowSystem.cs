@@ -38,6 +38,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Server.PDA;
 using Content.Shared.PDA;
+using Content.Shared.Gibbing;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Damage.Components;
 
 namespace Content.Server.DeadSpace.Demons.DemonShadow;
 
