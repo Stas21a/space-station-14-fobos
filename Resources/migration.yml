@@ -1234,3 +1234,7 @@ TowelColorMime: null
 # 2026-04-19
 HandheldAutopsyScannerUnpowered: HandheldAutopsyScanner
 HandheldAutopsyScannerEmpty: HandheldAutopsyScanner
+
+# 2026-04-17 - DS14
+ErtResponceConsole: ErtResponseConsole
+ErtResponceConsoleCircuitboard: ErtResponseConsoleCircuitboard
